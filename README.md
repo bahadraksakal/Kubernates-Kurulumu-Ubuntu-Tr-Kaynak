@@ -42,17 +42,13 @@ sudo containerd config default | sudo tee /etc/containerd/config.toml
 ##  Containerd Yapısındaki `/etc/containerd/config.toml` Adlı Config Dosyasının Düzenlenmesi.
 Containerd yapısındaki `/etc/containerd/config.toml` adlı config dosyasını terminal üzerinden nano ile açıyoruz.
 Daha sonra `SystemdCgroup` yazan yeri buluyoruz. Oradki `false` ifadesini `true` ile değiştiriyoruz.
-`ctrl+s` kombinasyonu ile nano ile açıp düzenlediğimiz config dosyasını kayıt ediyoruz.
-`ctrl+x` kombinasyonu ile nano ile açıp düzenlediğimiz config dosyasını kapatıyoruz.
 
 ```
 sudo nano /etc/containerd/config.toml
 ```
-
-Set SystemdCgroup to true:
-```
-SystemdCgroup = true // bu bir komut değildir terminale yapıştırıp çalıştırmayın !!!
-```
+Set SystemdCgroup to true: `SystemdCgroup = true // bu bir komut değildir terminale yapıştırıp çalıştırmayın !!!`
+`ctrl+s` kombinasyonu ile nano ile açıp düzenlediğimiz config dosyasını kayıt ediyoruz.
+`ctrl+x` kombinasyonu ile nano ile açıp düzenlediğimiz config dosyasını kapatıyoruz.
 
 Yaptığımız düzenlemelerin etkili olabilemesi için Containerd yapısını tekrardan başlatın.
 ```
