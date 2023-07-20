@@ -156,8 +156,8 @@ kubectl get nodes
 Eğer başarılı bir şekilde join olduysanız aşağıdaki gibi bir örnek çıktı ile karşılaşıcaksınız.
 <br />`
 | NAME | STATUS | ROLES | AGE | VERSION |
-| master | Ready | control-plane | 44h | v1.27.3
-| worker1 | Ready | <none> | 44h | v1.27.3
+<br />| master | Ready | control-plane | 44h | v1.27.3
+<br />| worker1 | Ready | <none> | 44h | v1.27.3
 `
 ## Sık Karşılaşılan Hatalar Ve Çözümleri
 kubeadm init işleminde bazı eksiklikler oldu ve tekrardan `sudo kubeadm init --pod-network-cidr=10.244.0.0/16` işlemini çalıştırmak isterseniz, bazı config dosyalarının sistemde bulunduğuna dair bir hata alırsanız. Çözümü için kodları çalıştırın:
