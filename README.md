@@ -323,9 +323,9 @@ kubectl apply -f backend-service.yaml
 
 Hizmet oluşturulduktan sonra, Hizmet ayrıntılarını görüntülemek için aşağıdaki komutu kullanabilirsiniz:
 ```
-kubectl get service backend-service
+kubectl get services
 ```
-kubectl get services komutu ile çalışan servis iplerini bulabilir ve ilgili port ile o servise bağlanabilirsiniz.
+komutu ile çalışan servis iplerini bulabilir ve ilgili port ile o servise bağlanabilirsiniz.
 
 Tarayıcı üzerinden ilgili ip ve port ile projenize erişebilirsiniz:
 ```
