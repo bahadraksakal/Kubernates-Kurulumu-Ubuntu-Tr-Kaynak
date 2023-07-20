@@ -47,8 +47,8 @@ Daha sonra `SystemdCgroup` yazan yeri buluyoruz. Oradki `false` ifadesini `true`
 ```
 sudo nano /etc/containerd/config.toml
 ```
-Set SystemdCgroup to true: `SystemdCgroup = true // bu bir komut değildir terminale yapıştırıp çalıştırmayın !!!` .
-`ctrl+s` kombinasyonuyla, nano ile açıp düzenlediğimiz config dosyasını kayıt ediyoruz.
+Set SystemdCgroup to true: `SystemdCgroup = true // bu bir komut değildir terminale yapıştırıp çalıştırmayın !!!` <br>
+`ctrl+s` kombinasyonuyla, nano ile açıp düzenlediğimiz config dosyasını kayıt ediyoruz.<br>
 `ctrl+x` kombinasyonuyla, nano ile açıp düzenlediğimiz config dosyasını kapatıyoruz.
 
 Yaptığımız düzenlemelerin etkili olabilemesi için Containerd yapısını tekrardan başlatın.
@@ -135,7 +135,7 @@ Aşağıdaki kodları uygulayın, doğru bir kurulumda gelen çıktıların benz
 ```
 kubectl get pods --all-namespaces
 ```
-Eğer kurulumunuz doğru ise aşağıdakine benzer, daha uzun bir çıktı alıcaksınız:
+Eğer kurulumunuz doğru ise aşağıdakine benzer, daha uzun bir çıktı alıcaksınız:<br>
 `
 NAMESPACE              NAME                                           READY   STATUS    RESTARTS        AGE
 default                grafana-deployment-nautilus-6864b8bfb9-zcpkl   1/1     Running   0               20m
