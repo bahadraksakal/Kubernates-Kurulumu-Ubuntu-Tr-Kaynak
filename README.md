@@ -135,25 +135,10 @@ Aşağıdaki kodları uygulayın, doğru bir kurulumda gelen çıktıların benz
 ```
 kubectl get pods --all-namespaces
 ```
-Eğer kurulumunuz doğru ise aşağıdakine benzer bir çıktı alıcaksınız:
+Eğer kurulumunuz doğru ise aşağıdakine benzer, daha uzun bir çıktı alıcaksınız:
 `
 NAMESPACE              NAME                                           READY   STATUS    RESTARTS        AGE
 default                grafana-deployment-nautilus-6864b8bfb9-zcpkl   1/1     Running   0               20m
-default                node-app-deployment-6595556d4b-jsx44           1/1     Running   0               20m
-kube-flannel           kube-flannel-ds-5zb65                          1/1     Running   2 (2m47s ago)   44h
-kube-flannel           kube-flannel-ds-tfv2p                          1/1     Running   2 (4m7s ago)    44h
-kube-flannel           kube-flannel-ds-wvfmr                          1/1     Running   3 (26m ago)     44h
-kube-system            coredns-5d78c9869d-v9kzx                       1/1     Running   3 (26m ago)     44h
-kube-system            coredns-5d78c9869d-vklg5                       1/1     Running   3 (26m ago)     44h
-kube-system            etcd-ubuntu                                    1/1     Running   3 (26m ago)     44h
-kube-system            kube-apiserver-ubuntu                          1/1     Running   3 (26m ago)     44h
-kube-system            kube-controller-manager-ubuntu                 1/1     Running   6 (26m ago)     44h
-kube-system            kube-proxy-h5hxh                               1/1     Running   2 (2m47s ago)   44h
-kube-system            kube-proxy-hwr44                               1/1     Running   3 (26m ago)     44h
-kube-system            kube-proxy-njxnw                               1/1     Running   2 (4m7s ago)    44h
-kube-system            kube-scheduler-ubuntu                          1/1     Running   6 (26m ago)     44h
-kubernetes-dashboard   dashboard-metrics-scraper-5cb4f4bb9c-dfj2q     1/1     Running   0               20m
-kubernetes-dashboard   kubernetes-dashboard-6967859bff-ql6ll          1/1     Running   0               20m
 `
 
 ## Token Yaratın  (Sadece Master|Controller Nodunuzda Çalıştırın!!!)
