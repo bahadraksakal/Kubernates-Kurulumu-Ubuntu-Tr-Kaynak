@@ -335,7 +335,7 @@ http://<ip>:<port>
 ## Kubernetes Dashboard Kurulumu
 Kubernastes dashboard workerlerinizi takip etmeye ve yönetmeye yarar. Komut satırını üzerinden yapabileceğiniz işlemler için size kullanımı daha kolay bir görsel arayüz sağlar.
 
-### Kubernetes dashboard'ın 
+### Kubernetes dashboard'ın Kurulması:
 Kubernetes Dashboard'u kubernetes cluster'a kuran kod:
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
@@ -382,8 +382,8 @@ Yukarıda bir kullanıcı oluşturmak için gerekli dosyaları hazırladık, şi
 ```
 kubectl apply -f admin-user-service-account.yaml -f admin-user-cluster-role-binding.yaml
 ```
-BU işlemden sonra konsoldan şu şekilde bir çıktı alıcaksınız:
-`//OUTPUT
+Bu işlemden sonra konsoldan şu şekilde bir çıktı alıcaksınız:
+`//Örnek OUTPUT:
 serviceaccount/admin-user created
 clusterrolebinding.rbac.authorization.k8s.io/admin-user created`
 
@@ -393,7 +393,7 @@ Kubernetes dashboard'a bağlanabilmek için token oluşturmamız lazım. Token o
 kubectl -n kubernetes-dashboard create token admin-user
 ```
 `
-//OUTPUT
+//Örnek OUTPUT:
 eyJhbGciOiJSUzI1Ni849urjwndjsncsh892943ıjfwks
 `
 
