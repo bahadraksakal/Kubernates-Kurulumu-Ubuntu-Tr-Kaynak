@@ -203,6 +203,137 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
+## Kubernate Sistemine Bir Projenin Deploy Edilmesi.
+*Tüm işlemleri Master(Controller) node üzerinde yapmanız daha sağlıklı olur*
+
+Bir Node.js projesini Kubernetes üzerinde çalıştırmak için aşağıdaki adımları takip edebilirsiniz:
+
+### 1. Dockerfile Oluşturma:
+Worker node üzerindeki Node.js projesini bir Docker imajına dönüştürebilmek için bir Dockerfile oluşturmanız gerekmektedir. Dockerfile, projenin gereksinimlerini ve yapılandırmasını belirtir. Örnek Dockerfile:
+
+```
+# Docker imajının temelini oluşturun
+FROM node:14
+
+# Uygulama dizinini oluşturun
+WORKDIR /app
+
+# Bağımlılıkları kopyalayın ve kurun
+COPY package.json .
+COPY package-lock.json .
+RUN npm install
+
+# Uygulama kaynak kodunu kopyalayın
+COPY . .
+
+# Uygulamayı başlatın
+CMD ["npm", "start"]
+```
+
+### 2. Docker imajının oluşturulması: 
+Dockerfile'ı kullanarak projenizin Docker imajını oluşturun. Bu imajı Docker Daemon aracılığıyla yerel Docker imaj deposuna (local Docker image repository) yükleyebilirsiniz. Dockerfile ile aynı dizinde bir terminal açın ve aşağıdaki örnek kodu kendinize göre uyarlayın:
+
+```
+docker build -t my-node-app:1.0 .
+```
+
+### 3. Docker imajının bir Container Registry'ye yüklenmesi:
+Docker imajını bir Container Registry'ye yükleyebilirsiniz. Bu adım, imajın Kubernetes cluster'ınızın tüm düğümleri tarafından erişilebilir olmasını sağlar. Örneğin, Docker Hub gibi bir Container Registry kullanabilirsiniz. İmajı Docker Hub'a yüklemek için şu adımları izleyebilirsiniz:
+
+   - Docker Hub'a oturum açın veya bir hesap oluşturun.
+   - Terminal üzerinden Docker Hub hesabınıza bağlamak için `docker login` komutunu kullanın.
+   - Docker imajını Docker Hub'a yüklemek için `docker push` komutunu kullanın. Örneğin:
+
+   ```
+   docker push my-dockerhub-username/my-node-app:1.0
+   ```
+
+### 4. Kubernetes Pod ve Deployment YAML dosyası oluşturma:
+Projenizi Kubernetes üzerinde çalıştırmak için bir Pod ve Deployment YAML dosyası oluşturmanız gerekmektedir. Bu dosyalar, projenizin Docker imajını kullanarak bir Pod ve Deployment kaynağının oluşturulmasını tanımlar. Örneğin:
+
+Pod YAML Dosyası (node-app-pod.yaml):
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-app-pod
+spec:
+  containers:
+    - name: node-app
+      image: my-dockerhub-username/my-node-app:1.0
+      ports:
+        - containerPort: 3000
+```
+
+Deployment YAML Dosyası (node-app-deployment.yaml):
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+        - name: node-app
+          image: my-dockerhub-username/my-node-app:1.0
+          ports:
+            - containerPort: 3000
+```
+
+### 5.Kubernetes üzerinde projenin yüklenmesi:
+ Oluşturduğunuz Pod ve Deployment YAML dosyalarını kullanarak Kubernetes cluster'ınıza kaynakları uygulayın. Bu, projenizin Pod ve Deployment olarak başlatılmasını sağlayacaktır. YAML dosyalarını uygulamak için aşağıdaki komutları kullanabilirsiniz:
+
+```
+kubectl apply -f node-app-pod.yaml
+kubectl apply -f node-app-deployment.yaml
+```
+
+Bu adımları takip ederek, Node.js projenizi bir Kubernetes cluster'ında çalıştırabilirsiniz. Projeyi ayrı bir Worker node üzerinde veya tüm düğümlerde dağıtabilirsiniz.
+
+### 6. Deploy edilen projenin servis üzerinden ayağa kaldırılması:
+
+Backend'i ayağa kaldırmak için gerekli dosya(backend-service.yaml):
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: node-app
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: NodePort
+```
+
+YAML dosyasını kullanarak Hizmeti oluşturmak için aşağıdaki komutu çalıştırın:
+```
+kubectl apply -f backend-service.yaml
+```
+
+Hizmet oluşturulduktan sonra, Hizmet ayrıntılarını görüntülemek için aşağıdaki komutu kullanabilirsiniz:
+```
+kubectl get service backend-service
+```
+kubectl get services komutu ile çalışan servis iplerini bulabilir ve ilgili port ile o servise bağlanabilirsiniz.
+
+Tarayıcı üzerinden ilgili ip ve port ile projenize erişebilirsiniz:
+```
+http://<ip>:<port>
+```
+
+
+
 
 
 
