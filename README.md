@@ -80,7 +80,7 @@ If there are any swap entries in the /etc/fstab file, remove them using a text e
 ```
 sudo nano /etc/fstab
 ```
-`/swapfile    none    swap    sw` açılan dosyada bu şekilde bir satır bulumaktadır. Satırın başına `#` koyarak kodu bu şekilde `#/swapfile    none    swap    sw` işlevsiz hale getirin.
+Açılan dosyada bu şekilde `/swapfile    none    swap    sw` bir satır bulumaktadır. Satırın başına `#` koyarak kodu bu şekilde `#/swapfile    none    swap    sw` işlevsiz hale getirin.
 `ctrl+s` kombinasyonu ile nano ile açıp düzenlediğimiz /etc/fstab dosyasını kayıt ediyoruz.
 `ctrl+x` kombinasyonu ile nano ile açıp düzenlediğimiz /etc/fstab dosyasını kapatıyoruz.
 
