@@ -47,9 +47,9 @@ Daha sonra `SystemdCgroup` yazan yeri buluyoruz. Oradki `false` ifadesini `true`
 ```
 sudo nano /etc/containerd/config.toml
 ```
-Set SystemdCgroup to true: `SystemdCgroup = true // bu bir komut değildir terminale yapıştırıp çalıştırmayın !!!`<br />
-`ctrl+s` kombinasyonuyla, nano ile açıp düzenlediğimiz config dosyasını kayıt ediyoruz.<br />
-`ctrl+x` kombinasyonuyla, nano ile açıp düzenlediğimiz config dosyasını kapatıyoruz.
+Set SystemdCgroup to true: `SystemdCgroup = true // bu bir komut değildir terminale yapıştırıp çalıştırmayın !!!`
+<br />`ctrl+s` kombinasyonuyla, nano ile açıp düzenlediğimiz config dosyasını kayıt ediyoruz.
+<br />`ctrl+x` kombinasyonuyla, nano ile açıp düzenlediğimiz config dosyasını kapatıyoruz.
 
 Yaptığımız düzenlemelerin etkili olabilemesi için Containerd yapısını tekrardan başlatın.
 ```
@@ -154,11 +154,10 @@ Bu adımda yapılan işlemlerinin başarılı olup olmadığını görmek için 
 kubectl get nodes
 ```
 Eğer başarılı bir şekilde join olduysanız aşağıdaki gibi bir örnek çıktı ile karşılaşıcaksınız.
-`
-NAME      STATUS     ROLES           AGE   VERSION
-master    Ready      control-plane   44h   v1.27.3
-worker1   Ready   <none>          44h   v1.27.3
-worker2   Ready   <none>          44h   v1.27.3
+<br />`
+| NAME | STATUS | ROLES | AGE | VERSION |
+| master | Ready | control-plane | 44h | v1.27.3
+| worker1 | Ready | <none> | 44h | v1.27.3
 `
 ## Sık Karşılaşılan Hatalar Ve Çözümleri
 kubeadm init işleminde bazı eksiklikler oldu ve tekrardan `sudo kubeadm init --pod-network-cidr=10.244.0.0/16` işlemini çalıştırmak isterseniz, bazı config dosyalarının sistemde bulunduğuna dair bir hata alırsanız. Çözümü için kodları çalıştırın:
