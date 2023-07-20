@@ -11,6 +11,8 @@ kuruluma başlamadan önce:
 - Tüm serverler de ```sudo -s``` ile root yetkisine sahip olabilme yetkiniz bulunmaladır.
 
 ## Kurulum Adımları
+
+Kurulum adımlarında hata alırsanız, sayfanın altında bulunan `Sık Karşılaşılan Hatalar Ve Çözümleri` başlığını inceleyebilirsiniz.
 Tüm adımları teker teker uygulayın, alabileceğini olası hataların çözümleri ve ek notlar sayfanın en alt kısmına eklenmiştir.
 
 Ubuntu terminalini açın ve aşağıdaki komutları çalıştırın.
@@ -59,7 +61,6 @@ Terminal herhangi bir çıktı vermez ise endişlenmeyin, bazı kodlar çalışt
 
 ## Kubernetes Kurulumu
 Kubernetes kurulumu için, aşağıdaki kodları takip edin:
-BU ADIMDA HATA OLABİLİR KANCA KOY EN ALTA ÇÖZÜM EKLE!
 ```
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
@@ -153,14 +154,9 @@ Bu adımda yapılan işlemlerinin başarılı olup olmadığını görmek için 
 ```
 kubectl get nodes
 ```
-Eğer başarılı bir şekilde join olduysanız aşağıdaki gibi bir örnek çıktı ile karşılaşıcaksınız.
-<br />`
-| NAME | STATUS | ROLES | AGE | VERSION |
-<br />| master | Ready | control-plane | 44h | v1.27.3
-<br />| worker1 | Ready | <none> | 44h | v1.27.3
-`
+
 ## Sık Karşılaşılan Hatalar Ve Çözümleri
-kubeadm init işleminde bazı eksiklikler oldu ve tekrardan `sudo kubeadm init --pod-network-cidr=10.244.0.0/16` işlemini çalıştırmak isterseniz, bazı config dosyalarının sistemde bulunduğuna dair bir hata alırsanız. Çözümü için kodları çalıştırın:
+###kubeadm init işleminde bazı eksiklikler oldu ve tekrardan `sudo kubeadm init --pod-network-cidr=10.244.0.0/16` işlemini çalıştırmak isterseniz, bazı config dosyalarının sistemde bulunduğuna dair bir hata alırsanız. Çözümü için kodları çalıştırın:
 ```
 sudo swapoff -a
 ```
@@ -176,9 +172,8 @@ sudo kubeadm reset
 ```
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
-bu adımlardan sonra işlem başarıyla tamamlanıcak.
 
-Worker node ile join olmaya çalışırken `[kubelet-check] The HTTP call equal to 'curl -sSL http://localhost:10248/healthz' failed with error: Get "http://localhost:10248/healthz": dial tcp 127.0.0.1:10248: connect: connection refused.` şeklinde bir hata alırsanız veya worker node'da bir sorun varsa tekrardan join olmaya çalışıyorsanız bazı config dosyalarının bulunuduğuna dair hata alırsınız, bu hataların çözümü için aşağıdaki aşağıdaki kodları çalıştırın:
+###Worker node ile join olmaya çalışırken `[kubelet-check] The HTTP call equal to 'curl -sSL http://localhost:10248/healthz' failed with error: Get "http://localhost:10248/healthz": dial tcp 127.0.0.1:10248: connect: connection refused.` şeklinde bir hata alırsanız veya worker node'da bir sorun varsa tekrardan join olmaya çalışıyorsanız bazı config dosyalarının bulunuduğuna dair hata alırsınız, bu hataların çözümü için aşağıdaki aşağıdaki kodları çalıştırın:
 ```
 swapoff -a
 ```
@@ -192,7 +187,7 @@ sudo systemctl restart kubelet
 ```
 `Master üzerinde yaratmış olduğunuz token ile worker node terminalinden tekrardan join olun`
 
-Worker node terminalinde join olmaya çalışırken veya kubectl'e erişirken `port 10250 is use` veya `time out` tarzı hatalar alıyorsanız aşağıdaki komutları çalıştırın:
+###Worker node terminalinde join olmaya çalışırken veya kubectl'e erişirken `port 10250 is use` veya `time out` tarzı hatalar alıyorsanız aşağıdaki komutları çalıştırın:
 ```
 sudo systemctl stop kubelet
 sudo rm -rf /etc/kubernetes
@@ -200,7 +195,7 @@ sudo rm -rf /var/lib/kubelet
 ```
 `Master üzerinde yaratmış olduğunuz token ile worker node terminalinden tekrardan join olun`
 
-Master(Controller) node'unuz kubectl'e erişirken bazı hatalar alırsanız(genelde reboot sonrası olur), aşağıdaki kodları çalıştırın:
+###Master(Controller) node'unuz kubectl'e erişirken bazı hatalar alırsanız(genelde reboot sonrası olur), aşağıdaki kodları çalıştırın:
 ```
 mv  $HOME/.kube $HOME/.kube.bak
 mkdir $HOME/.kube
