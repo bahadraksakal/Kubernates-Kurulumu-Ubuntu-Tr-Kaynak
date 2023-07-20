@@ -383,11 +383,10 @@ Yukarıda bir kullanıcı oluşturmak için gerekli dosyaları hazırladık, şi
 kubectl apply -f admin-user-service-account.yaml -f admin-user-cluster-role-binding.yaml
 ```
 BU işlemden sonra konsoldan şu şekilde bir çıktı alıcaksınız:
-`
-//OUTPUT
+`//OUTPUT
 serviceaccount/admin-user created
-clusterrolebinding.rbac.authorization.k8s.io/admin-user created
-`
+clusterrolebinding.rbac.authorization.k8s.io/admin-user created`
+
 ### Kubernetes dashboard'a Token Oluşturma:
 Kubernetes dashboard'a bağlanabilmek için token oluşturmamız lazım. Token oluşturmak için aşağıdaki kodu çalıştırın:
 ```
@@ -399,16 +398,17 @@ eyJhbGciOiJSUzI1Ni849urjwndjsncsh892943ıjfwks
 `
 
 ### Kubernetes dashboard'ın Ayağa Kaldırıması:
-Kubernetes dashboard'ı localde yayına alıp erişebilmek için aşağıdaki kodu çalıştırın:
+Kubernetes dashboard'ı localde yayına alıp erişebilmek için aşağıdaki kodu çalıştırın:,
+`Not: kubectl proxy çalıştırdıysanız kesinlikle aşağıdaki alternatif kodu çalıştırmayın.`
 ```
 kubectl proxy
 ```
-`Not: kubectl proxy çalıştırdıysanız kesinlikle aşağıdaki alternatif kodu çalıştırmayın.`
+
 Bu adımda yukarıdaki koda alternatif olarak aşağıdaki koduda uygulayabilirsiniz: (Not:Tets edilmedi.)
+`Not: yukarıdaki kodu çalıştırdıysanız kesinlikle kubectl proxy komutunu çalıştırmayın.`
 ```
 kubectl port-forward -n kubernetes-dashboard service/kubernetes-dashboard 8080:443
 ```
-`Not: yukarıdaki kodu çalıştırdıysanız kesinlikle kubectl proxy komutunu çalıştırmayın.`
 
 Ayağa kalkan Kubernetes dashboard'a erişmek için bir internet tarayıcısı üzerinden aşağıdaki adrese gidin:
 ```
