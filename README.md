@@ -1,5 +1,6 @@
 # Kubernates-Kurulumu-Ubuntu-Tr-Kaynak
 Ubuntu v18.04 || 22.04 sürümleri üzerinde 3 node ile (controller-worker1-worker2) kubernates kurulumu ve bir adet örnek projenin sistemde ayağa kaldırılmasını içeren repo. Duruma göre node sayısı arttırılabilir fakat en az 2 node (controller-worker1) bulunmalıdır.
+Aşağıdaki adımların bir kısmını şu videodan takip edebilirsiniz: https://www.youtube.com/watch?v=6_i1hXXviHw
 
 ## Gereksinimler
 kuruluma başlamadan önce:
@@ -129,11 +130,100 @@ kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.20.2/Do
 *Flannel ne işe yarar: Flannel, Kubernetes üzerinde ağ bağlantısını sağlamak için kullanılan bir ağ çözümüdür. Flannel, Kubernetes ortamında her bir konteynerin benzersiz bir IP adresine sahip olduğu ve bu konteynerlerin birbirleriyle iletişim kurabildiği bir ağ oluşturur. Konteynerlerin IP adresleri, her birine ayrılmış bir alt ağ bloğu kullanılarak tahsis edilir.*
 *Multi-Node yapısı için çok önemli bir sistem.*
 
-## Kurulumun Doğru Çalıştığını Doğrulanması
+## Kurulumun Doğru Çalıştığının Doğrulanması
 Aşağıdaki kodları uygulayın, doğru bir kurulumda gelen çıktıların benzeleri kodların altında paylaşılmıştır.
 ```
 kubectl get pods --all-namespaces
 ```
+Eğer kurulumunuz doğru ise aşağıdakine benzer bir çıktı alıcaksınız:
+`
+NAMESPACE              NAME                                           READY   STATUS    RESTARTS        AGE
+default                grafana-deployment-nautilus-6864b8bfb9-zcpkl   1/1     Running   0               20m
+default                node-app-deployment-6595556d4b-jsx44           1/1     Running   0               20m
+kube-flannel           kube-flannel-ds-5zb65                          1/1     Running   2 (2m47s ago)   44h
+kube-flannel           kube-flannel-ds-tfv2p                          1/1     Running   2 (4m7s ago)    44h
+kube-flannel           kube-flannel-ds-wvfmr                          1/1     Running   3 (26m ago)     44h
+kube-system            coredns-5d78c9869d-v9kzx                       1/1     Running   3 (26m ago)     44h
+kube-system            coredns-5d78c9869d-vklg5                       1/1     Running   3 (26m ago)     44h
+kube-system            etcd-ubuntu                                    1/1     Running   3 (26m ago)     44h
+kube-system            kube-apiserver-ubuntu                          1/1     Running   3 (26m ago)     44h
+kube-system            kube-controller-manager-ubuntu                 1/1     Running   6 (26m ago)     44h
+kube-system            kube-proxy-h5hxh                               1/1     Running   2 (2m47s ago)   44h
+kube-system            kube-proxy-hwr44                               1/1     Running   3 (26m ago)     44h
+kube-system            kube-proxy-njxnw                               1/1     Running   2 (4m7s ago)    44h
+kube-system            kube-scheduler-ubuntu                          1/1     Running   6 (26m ago)     44h
+kubernetes-dashboard   dashboard-metrics-scraper-5cb4f4bb9c-dfj2q     1/1     Running   0               20m
+kubernetes-dashboard   kubernetes-dashboard-6967859bff-ql6ll          1/1     Running   0               20m
+`
 
-## Node'lar ile Join Olun
-To add nodes to the cluster, run the kubeadm join command with the appropriate arguments on each node. The command will output a token that can be used to join the node to the cluster.
+## Token Yaratın  (Sadece Master|Controller Nodunuzda Çalıştırın!!!)
+Token yaratmak için aşağıdaki komutu çalıştırın
+```
+kubeadm token create --print-join-command
+```
+Kod çalıştıktan sonra verdiği tokenin tamamını kopyalayın.
+## Node'lar(Worker) ile Join Olun
+Yukarıdaki adımda kopyaladığınız tokeni, `worker node`'ların  terminaline yapıştırın ve çalıştırın.
+Bu adımda yapılan işlemlerinin başarılı olup olmadığını görmek için aşağıdaki komutu kullanabilirsiniz:
+```
+kubectl get nodes
+```
+Eğer başarılı bir şekilde join olduysanız aşağıdaki gibi bir örnek çıktı ile karşılaşıcaksınız.
+`
+NAME      STATUS     ROLES           AGE   VERSION
+master    Ready      control-plane   44h   v1.27.3
+worker1   Ready   <none>          44h   v1.27.3
+worker2   Ready   <none>          44h   v1.27.3
+`
+## Sık Karşılaşılan Hatalar Ve Çözümleri
+kubeadm init işleminde bazı eksiklikler oldu ve tekrardan `sudo kubeadm init --pod-network-cidr=10.244.0.0/16` işlemini çalıştırmak isterseniz, bazı config dosyalarının sistemde bulunduğuna dair bir hata alırsanız. Çözümü için kodları çalıştırın:
+```
+sudo swapoff -a
+```
+```
+sudo rm /etc/kubernetes/manifests/kube-apiserver.yaml
+sudo rm /etc/kubernetes/manifests/kube-controller-manager.yaml
+sudo rm /etc/kubernetes/manifests/kube-scheduler.yaml
+sudo rm /etc/kubernetes/manifests/etcd.yaml
+```
+```
+sudo kubeadm reset
+```
+```
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+```
+bu adımlardan sonra işlem başarıyla tamamlanıcak.
+
+Worker node ile join olmaya çalışırken `[kubelet-check] The HTTP call equal to 'curl -sSL http://localhost:10248/healthz' failed with error: Get "http://localhost:10248/healthz": dial tcp 127.0.0.1:10248: connect: connection refused.` şeklinde bir hata alırsanız veya worker node'da bir sorun varsa tekrardan join olmaya çalışıyorsanız bazı config dosyalarının bulunuduğuna dair hata alırsınız, bu hataların çözümü için aşağıdaki aşağıdaki kodları çalıştırın:
+```
+swapoff -a
+```
+```
+sudo rm -f /etc/kubernetes/kubelet.conf
+sudo rm -f /etc/kubernetes/bootstrap-kubelet.conf
+sudo rm -f /etc/kubernetes/pki/ca.crt
+```
+```
+sudo systemctl restart kubelet
+```
+`Master üzerinde yaratmış olduğunuz token ile worker node terminalinden tekrardan join olun`
+
+Worker node terminalinde join olmaya çalışırken veya kubectl'e erişirken `port 10250 is use` veya `time out` tarzı hatalar alıyorsanız aşağıdaki komutları çalıştırın:
+```
+sudo systemctl stop kubelet
+sudo rm -rf /etc/kubernetes
+sudo rm -rf /var/lib/kubelet
+```
+`Master üzerinde yaratmış olduğunuz token ile worker node terminalinden tekrardan join olun`
+
+Master(Controller) node'unuz kubectl'e erişirken bazı hatalar alırsanız(genelde reboot sonrası olur), aşağıdaki kodları çalıştırın:
+```
+mv  $HOME/.kube $HOME/.kube.bak
+mkdir $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+
+
+
