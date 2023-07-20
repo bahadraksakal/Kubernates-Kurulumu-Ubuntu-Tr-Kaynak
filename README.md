@@ -46,7 +46,8 @@ Daha sonra `SystemdCgroup` yazan yeri buluyoruz. Oradki `false` ifadesini `true`
 ```
 sudo nano /etc/containerd/config.toml
 ```
-Set SystemdCgroup to true: `SystemdCgroup = true // bu bir komut değildir terminale yapıştırıp çalıştırmayın !!!`
+Set SystemdCgroup to true: `SystemdCgroup = true // bu bir komut değildir terminale yapıştırıp çalıştırmayın !!!`.
+
 `ctrl+s` kombinasyonu ile nano ile açıp düzenlediğimiz config dosyasını kayıt ediyoruz.
 `ctrl+x` kombinasyonu ile nano ile açıp düzenlediğimiz config dosyasını kapatıyoruz.
 
