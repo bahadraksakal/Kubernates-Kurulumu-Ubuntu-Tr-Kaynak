@@ -69,8 +69,8 @@ sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 sudo apt install kubeadm kubelet kubectl kubernetes-cni
 ```
 
-## Disable swap
-Disable swap using the following command:
+## swap 'ın Kapatılması ve Ağ Ayalarının Yapılandırılması
+swap'ı kapamak ve ağ ayarlarını yapılandırmak için aşağıdaki kodu çalıştırın:
 
 ```
 sudo swapoff -a
@@ -80,7 +80,9 @@ If there are any swap entries in the /etc/fstab file, remove them using a text e
 ```
 sudo nano /etc/fstab
 ```
-// 3 YADA 2 SATIRLIK BİR KOD VAR BİR TANESİNİ KAPIYORDUK ŞUAN UNUTTUM BAKIP EKLEYECEĞİM.
+`/swapfile    none    swap    sw` açılan dosyada bu şekilde bir satır bulumaktadır. Satırın başına `#` koyarak kodu bu şekilde `#/swapfile    none    swap    sw` işlevsiz hale getirin.
+`ctrl+s` kombinasyonu ile nano ile açıp düzenlediğimiz /etc/fstab dosyasını kayıt ediyoruz.
+`ctrl+x` kombinasyonu ile nano ile açıp düzenlediğimiz /etc/fstab dosyasını kapatıyoruz.
 
 Enable kernel modules
 ```
