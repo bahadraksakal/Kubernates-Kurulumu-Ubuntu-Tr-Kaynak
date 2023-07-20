@@ -3,7 +3,7 @@ Ubuntu v18.04 || 22.04 sürümleri üzerinde 3 node ile (controller-worker1-work
 Aşağıdaki adımların bir kısmını şu videodan takip edebilirsiniz: https://www.youtube.com/watch?v=6_i1hXXviHw
 
 ### Hazırlayan:
-*Bahadır Aksakal*
+*[Bahadır Aksakal](https://github.com/bahadraksakal)*
 
 ## Gereksinimler
 kuruluma başlamadan önce:
