@@ -46,10 +46,9 @@ Daha sonra `SystemdCgroup` yazan yeri buluyoruz. Oradki `false` ifadesini `true`
 ```
 sudo nano /etc/containerd/config.toml
 ```
-Set SystemdCgroup to true: `SystemdCgroup = true // bu bir komut değildir terminale yapıştırıp çalıştırmayın !!!`.
-
-`ctrl+s` kombinasyonu ile nano ile açıp düzenlediğimiz config dosyasını kayıt ediyoruz.
-`ctrl+x` kombinasyonu ile nano ile açıp düzenlediğimiz config dosyasını kapatıyoruz.
+Set SystemdCgroup to true: `SystemdCgroup = true // bu bir komut değildir terminale yapıştırıp çalıştırmayın !!!` .
+`ctrl+s` kombinasyonuyla, nano ile açıp düzenlediğimiz config dosyasını kayıt ediyoruz.
+`ctrl+x` kombinasyonuyla, nano ile açıp düzenlediğimiz config dosyasını kapatıyoruz.
 
 Yaptığımız düzenlemelerin etkili olabilemesi için Containerd yapısını tekrardan başlatın.
 ```
@@ -78,8 +77,8 @@ If there are any swap entries in the /etc/fstab file, remove them using a text e
 sudo nano /etc/fstab
 ```
 Açılan dosyada bu şekilde `/swapfile    none    swap    sw` bir satır bulumaktadır. Satırın başına `#` koyarak kodu bu şekilde `#/swapfile    none    swap    sw` işlevsiz hale getirin.
-`ctrl+s` kombinasyonu ile nano ile açıp düzenlediğimiz /etc/fstab dosyasını kayıt ediyoruz.
-`ctrl+x` kombinasyonu ile nano ile açıp düzenlediğimiz /etc/fstab dosyasını kapatıyoruz.
+`ctrl+s` kombinasyonuyla, nano ile açıp düzenlediğimiz /etc/fstab dosyasını kayıt ediyoruz.
+`ctrl+x` kombinasyonuyla, nano ile açıp düzenlediğimiz /etc/fstab dosyasını kapatıyoruz.
 
 Enable kernel modules
 ```
