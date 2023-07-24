@@ -47,7 +47,7 @@ sudo containerd config default | sudo tee /etc/containerd/config.toml
 
 ##  Containerd Yapısındaki `/etc/containerd/config.toml` Adlı Config Dosyasının Düzenlenmesi.
 Containerd yapısındaki `/etc/containerd/config.toml` adlı config dosyasını terminal üzerinden nano ile açıyoruz.
-Daha sonra `SystemdCgroup` yazan yeri buluyoruz. Oradki `false` ifadesini `true` ile değiştiriyoruz.
+Daha sonra `SystemdCgroup` yazan yeri buluyoruz. Oradaki `false` ifadesini `true` ile değiştiriyoruz.
 
 ```
 sudo nano /etc/containerd/config.toml
@@ -77,7 +77,7 @@ swap'ı kapamak ve ağ ayarlarını yapılandırmak için aşağıdaki kodu çal
 sudo swapoff -a
 ```
 
-If there are any swap entries in the /etc/fstab file, remove them using a text editor such as nano:
+ /etc/fstab dosyasında, swap ile ilgili bir ifade varsa bu ifadenin nano ile işlevsiz hale getirilmesi:
 ```
 sudo nano /etc/fstab
 ```
@@ -85,21 +85,21 @@ Açılan dosyada bu şekilde `/swapfile    none    swap    sw` bir satır buluma
 `ctrl+s` kombinasyonuyla, nano ile açıp düzenlediğimiz /etc/fstab dosyasını kayıt ediyoruz.
 `ctrl+x` kombinasyonuyla, nano ile açıp düzenlediğimiz /etc/fstab dosyasını kapatıyoruz.
 
-Enable kernel modules
+br_netfilter isimli kernel modülünü etkinleştirme:
 ```
 sudo modprobe br_netfilter
 ```
+"br_netfilter" adlı bir kernel modülü yüklenir. Bu modül, linux'ta köprülenmiş ağ yapılandırmasında (bridge) paket filtreleme ve bağlantı izleme işlevlerini sağlayan bir modüldür.
 *`sudo modprobe br_netfilter` komutu, makine yeniden başlatılırsa vb... işlevini kaybeder. Kalıcı ayarı set etmek için örnek bir kodu aşağıda paylaşacağım.*
 *kalıcı kodu test etmedim. Makineler yeniden başlatıldıktan sonra hata alırsanız ve işin içinden çıkamayıp sıfırdan kurulum yapmak isterseniz:
 kalıcı kodu kullanın veya `sudo modprobe br_netfilter` komutunu tekrardan girin.*
 
-Add some settings to sysctl
+sysctl ile bazı ayarların yapılandırılması:
 ```
 sudo sysctl -w net.ipv4.ip_forward=1
 ```
-*`sudo sysctl -w net.ipv4.ip_forward=1` komutu, makine yeniden başlatılırsa vb... işlevini kaybeder. Kalıcı ayarı set etmek için örnek bir kodu aşağıda paylaşacağım.*
-*kalıcı kodu test etmedim. Makineler yeniden başlatıldıktan sonra hata alırsanız ve işin içinden çıkamayıp sıfırdan kurulum yapmak isterseniz:
-kalıcı kodu kullanın veya `sudo sysctl -w net.ipv4.ip_forward=1` komutunu tekrardan girin.*
+*`sudo sysctl -w net.ipv4.ip_forward=1` komutu, makine yeniden başlatılırsa vb... işlevini kaybeder.  Bir hata almanız durumunda, işin içinden çıkamayıp sıfırdan kurulum yapmak isterseniz:
+`sudo sysctl -w net.ipv4.ip_forward=1` komutunu tekrardan çalıştırın.*
 
 ## Cluster Ayağa Kaldırma (Sadece Master|Controller Nodunuzda Çalıştırın!!!)
 Cluster ayağa kaldırmak için aşağıdaki kodu yalnızca Master nodunuzda uygulayın:
