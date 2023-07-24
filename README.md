@@ -90,9 +90,7 @@ br_netfilter isimli kernel modülünü etkinleştirme:
 sudo modprobe br_netfilter
 ```
 "br_netfilter" adlı bir kernel modülü yüklenir. Bu modül, linux'ta köprülenmiş ağ yapılandırmasında (bridge) paket filtreleme ve bağlantı izleme işlevlerini sağlayan bir modüldür.
-*`sudo modprobe br_netfilter` komutu, makine yeniden başlatılırsa vb... işlevini kaybeder. Kalıcı ayarı set etmek için örnek bir kodu aşağıda paylaşacağım.*
-*kalıcı kodu test etmedim. Makineler yeniden başlatıldıktan sonra hata alırsanız ve işin içinden çıkamayıp sıfırdan kurulum yapmak isterseniz:
-kalıcı kodu kullanın veya `sudo modprobe br_netfilter` komutunu tekrardan girin.*
+*`sudo modprobe br_netfilter` komutu, makine yeniden başlatılırsa vb... işlevini kaybeder. Bir hata almanız durumunda, işin içinden çıkamayıp sıfırdan kurulum yapmak isterseniz: `sudo modprobe br_netfilter` komutunu tekrardan çalıştırın.*
 
 sysctl ile bazı ayarların yapılandırılması:
 ```
